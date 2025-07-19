@@ -2,7 +2,7 @@ const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const captureBtn = document.getElementById("captureBtn");
 
-async function startCamera() {
+function startCamera() {
   navigator.mediaDevices.getUserMedia({
       video: true
   }).then(
