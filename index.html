@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Kamera Langsung</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camera App</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>📸 Ambil Foto Langsung</h2>
-  <video id="video" autoplay playsinline></video>
-  <button id="capture">📷 Ambil Foto</button>
-  <canvas id="canvas" style="display:none;"></canvas>
-  <img id="snapshot" alt="Hasil Foto">
-  <button id="send" disabled>📤 Kirim ke Bot</button>
+  <video id="camera" autoplay playsinline></video>
+  <button id="captureBtn">📸 Ambil Foto</button>
+  <canvas id="canvas" style="display: none;"></canvas>
 
   <script src="script.js"></script>
 </body>
