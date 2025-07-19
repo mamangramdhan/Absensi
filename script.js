@@ -34,3 +34,4 @@ captureBtn.onclick = () => {
   .then(msg => alert("✅ Foto terkirim"))
   .catch(err => alert("❌ Gagal kirim: " + err.message));
 };
+
