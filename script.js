@@ -2,9 +2,9 @@ const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const captureBtn = document.getElementById("captureBtn");
 
-async function startCamera() {
+function startCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const stream = navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
   } catch (err) {
     alert("Gagal mengakses kamera: " + err.message);
