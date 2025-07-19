@@ -1,72 +1,33 @@
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const snapshot = document.getElementById('snapshot');
-const captureBtn = document.getElementById('capture');
-const sendBtn = document.getElementById('send');
+const video = document.getElementById("camera");
+const canvas = document.getElementById("canvas");
+const captureBtn = document.getElementById("captureBtn");
 
-let imageDataBase64 = null;
-let captureTime = null;
-let userLocation = null;
+async function startCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+  } catch (err) {
+    alert("Gagal mengakses kamera: " + err.message);
+  }
+}
 
-// Minta akses kamera
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(stream => video.srcObject = stream)
-  .catch(err => alert("Gagal akses kamera: " + err.message));
-
-// Ambil lokasi
-navigator.geolocation.getCurrentPosition(
-  (pos) => {
-    userLocation = {
-      lat: pos.coords.latitude,
-      lon: pos.coords.longitude,
-      accuracy: pos.coords.accuracy
-    };
-    console.log("Lokasi:", userLocation);
-  },
-  (err) => alert("Gagal dapat lokasi: " + err.message),
-  { enableHighAccuracy: true }
-);
-
-// Ambil foto
 captureBtn.onclick = () => {
-  captureTime = new Date().toISOString();
+  const context = canvas.getContext("2d");
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0);
-  imageDataBase64 = canvas.toDataURL('image/jpeg');
-  snapshot.src = imageDataBase64;
-  sendBtn.disabled = false;
-};
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-// Kirim ke server
-sendBtn.onclick = () => {
-  if (!imageDataBase64) return;
-  const photoBlob = dataURLtoBlob(imageDataBase64);
-  const formData = new FormData();
-  formData.append('photo', photoBlob, 'photo.jpg');
-  formData.append('timestamp', captureTime);
+  const imageData = canvas.toDataURL("image/jpeg", 0.9);
 
-  if (userLocation) {
-    formData.append('latitude', userLocation.lat);
-    formData.append('longitude', userLocation.lon);
-    formData.append('accuracy', userLocation.accuracy);
-  }
-
-  fetch('https://your-backend-endpoint.com/upload', {
-    method: 'POST',
-    body: formData
+  // Kirim base64 ke GAS backend
+  fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+    method: "POST",
+    body: JSON.stringify({ image: imageData }),
+    headers: { "Content-Type": "application/json" }
   })
-    .then(res => res.text())
-    .then(msg => alert("Berhasil dikirim!"))
-    .catch(err => alert("Gagal: " + err.message));
+  .then(res => res.text())
+  .then(msg => alert(msg))
+  .catch(err => alert("Gagal kirim gambar: " + err.message));
 };
 
-// Base64 ke Blob
-function dataURLtoBlob(dataurl) {
-  const arr = dataurl.split(',');
-  const mime = arr[0].match(/:(.*?);/)[1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length, u8arr = new Uint8Array(n);
-  while(n--) u8arr[n] = bstr.charCodeAt(n);
-  return new Blob([u8arr], { type: mime });
-}
+startCamera();
