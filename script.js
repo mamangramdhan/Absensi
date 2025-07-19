@@ -2,13 +2,13 @@ const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const captureBtn = document.getElementById("captureBtn");
 
-function startCamera() {
-  try {
-    const stream = navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
-  } catch (err) {
-    alert("Gagal mengakses kamera: " + err.message);
-  }
+async function startCamera() {
+  navigator.mediaDevices.getUserMedia({
+      video: true
+  }).then(
+    stream => (video.srcObject = stream),
+    err => console.log(err)
+  );
 }
 
 captureBtn.onclick = () => {
