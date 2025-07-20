@@ -6,8 +6,8 @@ let sendBtn = document.getElementById('send');
 
 let currentStream = null;
 let usingFront = false;
-let currentCoords = { lat: null, lon: null };
-let address = "Alamat tidak ditemukan";
+// let currentCoords = { lat: null, lon: null };
+// let address = "Alamat tidak ditemukan";
 
 // Load kamera
 async function getStream() {
@@ -37,33 +37,33 @@ switchBtn.onclick = () => {
 getStream(); // Start awal
 
 // Lokasi GPS + Reverse geocode
-function getLocation() {
-  if (!navigator.geolocation) {
-    document.getElementById("lokasi").textContent = "Geolocation tidak didukung!";
-    return;
-  }
+// function getLocation() {
+//   if (!navigator.geolocation) {
+//     document.getElementById("lokasi").textContent = "Geolocation tidak didukung!";
+//     return;
+//   }
 
-  navigator.geolocation.getCurrentPosition(async pos => {
-    const { latitude, longitude } = pos.coords;
-    currentCoords.lat = latitude;
-    currentCoords.lon = longitude;
+//   navigator.geolocation.getCurrentPosition(async pos => {
+//     const { latitude, longitude } = pos.coords;
+//     currentCoords.lat = latitude;
+//     currentCoords.lon = longitude;
 
-    document.getElementById("koordinat").textContent = `📌 Koordinat: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+//     document.getElementById("koordinat").textContent = `📌 Koordinat: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
 
-    try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-      const data = await res.json();
-      address = data.display_name;
-      document.getElementById("lokasi").textContent = `📍 Lokasi: ${address}`;
-    } catch (e) {
-      document.getElementById("lokasi").textContent = "📍 Tidak bisa ambil alamat";
-    }
-  }, () => {
-    document.getElementById("lokasi").textContent = "📍 Gagal mendapatkan lokasi!";
-  });
-}
+//     try {
+//       const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+//       const data = await res.json();
+//       address = data.display_name;
+//       document.getElementById("lokasi").textContent = `📍 Lokasi: ${address}`;
+//     } catch (e) {
+//       document.getElementById("lokasi").textContent = "📍 Tidak bisa ambil alamat";
+//     }
+//   }, () => {
+//     document.getElementById("lokasi").textContent = "📍 Gagal mendapatkan lokasi!";
+//   });
+// }
 
-getLocation();
+// getLocation();
 
 // Timestamp live
 setInterval(() => {
@@ -88,9 +88,9 @@ sendBtn.onclick = async () => {
 
   const form = new FormData();
   form.append("photo", blob, "absen.jpg");
-  form.append("lat", currentCoords.lat);
-  form.append("lon", currentCoords.lon);
-  form.append("alamat", address);
+  // form.append("lat", currentCoords.lat);
+  // form.append("lon", currentCoords.lon);
+  // form.append("alamat", address);
   form.append("waktu", new Date().toISOString());
 
   try {
