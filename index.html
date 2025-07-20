@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="referrer" content="no-referrer" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Camera App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Absensi Kamera</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <video id="camera" autoplay playsinline></video>
-  <button id="captureBtn"></button>
-  <canvas id="canvas" style="display: none;"></canvas>
+  <h2>Absensi Kamera</h2>
+
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas" style="display:none;"></canvas>
+
+  <div class="buttons">
+    <button id="switch">🔄 Ganti Kamera</button>
+    <button id="snap">📸 Ambil Foto</button>
+    <button id="send" disabled>📤 Kirim</button>
+  </div>
+
+  <div class="info">
+    <p id="lokasi">📍 Mendeteksi lokasi...</p>
+    <p id="koordinat"></p>
+    <p id="timestamp">🕒 </p>
+  </div>
 
   <script src="script.js"></script>
 </body>
