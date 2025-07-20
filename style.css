@@ -19,7 +19,7 @@ button#captureBtn {
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
-  border: none;
+  border: double;
   border-radius: 50%;
   width: 70px;
   
