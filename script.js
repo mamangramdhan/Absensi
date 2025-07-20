@@ -94,7 +94,7 @@ sendBtn.onclick = async () => {
   form.append("waktu", new Date().toISOString());
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKxxxxxxx/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzkkVrrzB1NOQTs2Uz39YNLE44vPlRp1ITheRTXNqz9pfNJ1KsP_FPPTp1e3qBbWLJs/exec", {
       method: "POST",
       body: form
     });
